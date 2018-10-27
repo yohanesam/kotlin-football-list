@@ -2,4 +2,7 @@
 <resources>
     <item name="club_name" type="id"/>
     <item name="club_image" type="id"/>
+    <item name="club_name_detail" type="id"/>
+    <item name="club_image_detail" type="id"/>
+    <item name="club_exp_detail" type="id"/>
 </resources>

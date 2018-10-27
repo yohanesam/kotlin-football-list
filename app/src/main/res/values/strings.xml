@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Football Club</string>
 
-    <string name="op">Choose Your Team</string>
+    <string name="op">Choose Your Team ... !!!</string>
 
     <string-array name="club_name">
         <item>Barcelona FC</item>

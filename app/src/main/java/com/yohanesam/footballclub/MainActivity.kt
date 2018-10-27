@@ -3,9 +3,10 @@ package com.yohanesam.footballclub
 import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.GridLayoutManager
-import kotlinx.android.synthetic.main.abc_activity_chooser_view.*
+import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.intentFor
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,8 +18,13 @@ class MainActivity : AppCompatActivity() {
 
         init()
 
-        recycle_layout.layoutManager = GridLayoutManager(this, 1)
-        recycle_layout.adapter = RecycleViewAdapter(this, items)
+        recycle_layout.layoutManager = LinearLayoutManager(this)
+        recycle_layout.adapter = RecycleViewAdapter(this, items) {
+            Log.d("TAG","img = ${it.image}, name = ${it.name}, detail = ${it.detail}")
+            startActivity(intentFor<SecondActivity>(
+                "name" to it.name, "image" to it.image, "detail" to it.detail
+            ))
+        }
     }
 
     @SuppressLint("ResourceType")

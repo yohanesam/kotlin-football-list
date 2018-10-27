@@ -1,6 +1,8 @@
 package com.yohanesam.footballclub
 
 import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.view.ViewGroup
@@ -8,12 +10,11 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.abc_activity_chooser_view.view.*
 import kotlinx.android.extensions.LayoutContainer
 import org.jetbrains.anko.*
 import org.jetbrains.anko.cardview.v7.cardView
 
-class RecycleViewAdapter(private val context: Context, private val items: List<FootballList>) :
+class RecycleViewAdapter(private val context: Context, private val items: List<FootballList>, private val listener: (FootballList) -> Unit) :
         RecyclerView.Adapter<RecycleViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -23,17 +24,17 @@ class RecycleViewAdapter(private val context: Context, private val items: List<F
     override fun getItemCount(): Int = items.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindItem(items[position], context)
+        holder.bindItem(items[position], context, listener)
     }
 
     class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView), LayoutContainer {
         val name = containerView.find<TextView>(R.id.club_name)
         val image = containerView.find<ImageView>(R.id.club_image)
 
-        fun bindItem(items: FootballList, context: Context) {
+        fun bindItem(items: FootballList, context: Context, listener: (FootballList) -> Unit) {
             name.text = items.name
             items.image?.let { Glide.with(context).load(it).into(image) }
-//            containerView.setOnClickListener{listener(items)}
+            containerView.setOnClickListener{listener(items)}
         }
     }
 
@@ -50,6 +51,11 @@ class UI : AnkoComponent<Context> {
                 rightMargin = dip(10)
             }
 
+            radius = dip(14).toFloat()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                elevation = dip(4).toFloat()
+            }
+
             relativeLayout {
                 padding = dip(16)
 
@@ -61,6 +67,7 @@ class UI : AnkoComponent<Context> {
 
                 textView {
                     textSize = sp(9).toFloat()
+                    textColor = Color.BLACK
                     id = R.id.club_name
                 }.lparams(width = wrapContent, height = wrapContent) {
                     centerVertically()
