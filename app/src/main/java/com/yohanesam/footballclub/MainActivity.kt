@@ -21,9 +21,9 @@ class MainActivity : AppCompatActivity() {
         recycle_layout.layoutManager = LinearLayoutManager(this)
         recycle_layout.adapter = RecycleViewAdapter(this, items) {
             Log.d("TAG","img = ${it.image}, name = ${it.name}, detail = ${it.detail}")
-            startActivity(intentFor<SecondActivity>(
+            startActivity<SecondActivity>(
                 "name" to it.name, "image" to it.image, "detail" to it.detail
-            ))
+            )
         }
     }
 
